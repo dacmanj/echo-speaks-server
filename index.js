@@ -382,8 +382,8 @@ function sendServerDataToHub() {
                 body: {
                     version: appVer,
                     onHeroku: configData.settings.useHeroku === true,
-                    isLocal: configData.settings.useHeroku !== true,
-                    serverUrl: configData.settings.useHeroku === true ? null : `http://${getLocalHost()}`,
+                    isLocal: (configData.settings.useHeroku !== true && !process.env.serverUrl),
+                    serverUrl: process.env.serverUrl || (configData.settings.useHeroku === true ? null : `http://${getLocalHost()}`),
                 },
                 json: true,
             };
