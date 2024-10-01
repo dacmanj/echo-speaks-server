@@ -1,0 +1,39 @@
+version: "3"
+services:
+  echo-speaks-server:
+    container_name: echo-speaks-server
+#    image: tonesto7/echo-speaks-server
+    build: https://github.com/tonesto7/echo-speaks-server.git
+    restart: unless-stopped
+    
+    # Network mode host allows IP to be automatically detected
+    # Windows MUST change from host to bridge mode and set IP in settings below
+    network_mode: host
+    #network_mode: bridge
+    # Port mappings are ignored with host mode
+    ports:
+      - 8091:8091   # WebUI must match PORT below
+    
+    # Set environment variables
+    environment:
+      - useHeroku=false
+      - hubPlatform=Hubitat
+
+      #### UNCOMMENT Options to use them (remove the # and keep the -) ####
+      ## Host IP Address Override if needed
+      ## MUST Uncomment next line and set IP when using network_mode: bridge
+      #- ipAddress=192.168.1.XXX
+
+      ## Change WebUI Port if needed
+      #- PORT=8091
+
+      ## Set callback URL here if you want
+      #- appCallbackUrl=
+
+      ## Set amazon domain and locale if need to change from default
+      #- amazonDomain=amazon.com
+      #- regionLocale=en-US
+
+    # Keeps login and session if re-deployed
+    volumes:
+      - echo_speaks_data:/root
