@@ -1,4 +1,3 @@
-version: "3"
 services:
   echo-speaks-server:
     container_name: echo-speaks-server
